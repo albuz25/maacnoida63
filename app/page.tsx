@@ -160,6 +160,23 @@ export default function Home() {
             <Image src="/maacnoida.png" alt="MAAC Noida" fill priority sizes="(max-width: 640px) 128px, 176px" className="object-contain" />
           </a>
 
+          <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1 lg:flex">
+            {[
+              ["Courses", "#courses"],
+              ["Degree", "#degree"],
+              ["Student Work", "#student-work"],
+              ["Contact", "#contact"],
+            ].map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                className="rounded-full px-4 py-2 text-sm font-bold text-white/68 transition hover:bg-maacGold hover:text-black"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
           <a
             href="tel:08048032030"
             className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-maacGold px-4 py-2.5 text-sm font-extrabold text-black shadow-gold transition hover:scale-105 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-maacGold focus:ring-offset-2 focus:ring-offset-studio"
@@ -246,7 +263,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
+      <section id="degree" className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-[2.5rem] border border-maacGold/25 bg-gradient-to-br from-maacGold/[0.16] via-white/[0.045] to-white/[0.02] p-5 shadow-gold sm:p-8 lg:p-10">
           <div className="absolute right-[-70px] top-[-70px] h-44 w-44 rounded-full bg-maacGold/20 blur-3xl" />
           <div className="relative grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -295,7 +312,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-white py-12 text-black sm:py-16">
+      <section id="student-work" className="bg-white py-12 text-black sm:py-16">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-2xl font-black tracking-tight sm:text-4xl">
             Projects Created By <span className="text-red-600">Our Students</span>

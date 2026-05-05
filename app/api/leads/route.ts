@@ -60,6 +60,8 @@ export async function POST(request: Request) {
     mobile,
     course_interest: course,
     source: "maac-sector-63-landing",
+    status: "new",
+    notes: null,
   });
 
   if (error) {
