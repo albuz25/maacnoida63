@@ -10,6 +10,7 @@ import {
   GraduationCap,
   Layers3,
   MapPin,
+  MessageCircle,
   MonitorSmartphone,
   Palette,
   PenTool,
@@ -493,6 +494,17 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <a
+        href="https://wa.me/919319477255?text=Hi%20I%20want%20to%20know%20more%20about%20MAAC%20Courses"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-4 right-4 z-[60] inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-black text-black shadow-2xl shadow-black/35 transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-studio sm:bottom-6 sm:right-6 sm:px-5"
+      >
+        <MessageCircle className="h-5 w-5" aria-hidden="true" />
+        <span className="hidden sm:inline">WhatsApp</span>
+      </a>
     </main>
   );
 }

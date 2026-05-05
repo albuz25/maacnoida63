@@ -8,19 +8,38 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const title = "MAAC NCR | Animation, VFX, Design & Degree Courses";
+const description =
+  "Explore career-focused animation, VFX, graphic design, game design, UI/UX, and B.Voc Animation & VFX programs at MAAC NCR.";
+
 export const metadata: Metadata = {
-  title: "MAAC | VFX, Animation, Graphic Design, Game Design, UI/UX & BVoc",
-  description:
-    "Join MAAC Sector 63, Noida for career-focused VFX, animation, graphic design, game design, UI/UX, and B.Voc Animation & VFX courses near H-Block, Film City, and NCR's creative studios.",
+  metadataBase: new URL("https://www.maacncr.com"),
+  title,
+  description,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "MAAC Creative Courses",
-    description:
-      "Master VFX, animation, graphic design, game design, UI/UX, and B.Voc Animation & VFX with industry-led creative courses.",
+    title,
+    description,
+    url: "https://www.maacncr.com",
+    siteName: "MAAC NCR",
     type: "website",
     locale: "en_IN",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "MAAC NCR creative courses preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/twitter-image"],
   },
 };
 
