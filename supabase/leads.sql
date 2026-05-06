@@ -8,6 +8,12 @@ create table if not exists public.leads (
   course_interest text not null check (
     course_interest in (
       '3D Animation',
+      'VFX & ADVFX',
+      'UI UX',
+      'Gaming',
+      'Interior',
+      'Creator X',
+      'Career X',
       'VFX',
       'Game Design',
       'UI/UX',
@@ -25,6 +31,24 @@ create index if not exists leads_created_at_idx on public.leads (created_at desc
 create index if not exists leads_mobile_idx on public.leads (mobile);
 create index if not exists leads_course_interest_idx on public.leads (course_interest);
 
+alter table public.leads drop constraint if exists leads_course_interest_check;
+alter table public.leads add constraint leads_course_interest_check check (
+  course_interest in (
+    '3D Animation',
+    'VFX & ADVFX',
+    'UI UX',
+    'Gaming',
+    'Interior',
+    'Creator X',
+    'Career X',
+    'VFX',
+    'Game Design',
+    'UI/UX',
+    'Graphic Design',
+    'B.Voc in Animation & VFX'
+  )
+);
+
 alter table public.leads enable row level security;
 
 drop policy if exists "Allow public lead inserts" on public.leads;
@@ -38,10 +62,12 @@ with check (
   and mobile ~ '^[6-9][0-9]{9}$'
   and course_interest in (
     '3D Animation',
-    'VFX',
-    'Game Design',
-    'UI/UX',
-    'Graphic Design',
+    'VFX & ADVFX',
+    'UI UX',
+    'Gaming',
+    'Interior',
+    'Creator X',
+    'Career X',
     'B.Voc in Animation & VFX'
   )
   and source = 'maac-sector-63-landing'
