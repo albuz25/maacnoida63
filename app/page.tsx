@@ -28,51 +28,52 @@ declare global {
 
 const courses = [
   {
-    name: "3D Animation",
+    name: "Best 3D Animation Course in Noida",
     description: (
       <>
-        Master the full pipeline from <strong>Maya</strong> to <strong>ZBrush</strong>. Learn character sculpting,
-        rigging, and high-end cinematic animation.
+        Master the full pipeline from <strong>Maya</strong> to <strong>ZBrush</strong> with an{" "}
+        <strong>Animation Degree</strong>-level learning path. Build character sculpting, rigging, and cinematic
+        animation skills for studio careers in Noida and Ghaziabad.
       </>
     ),
     icon: Palette,
   },
   {
-    name: "VFX & ADVFX",
+    name: "Advanced VFX Degree Programs in Delhi NCR",
     description: (
       <>
-        Advanced compositing in <strong>Nuke</strong> and dynamic simulations in <strong>Houdini</strong>. The ADVFX
-        Plus program is designed for Hollywood-standard visual effects.
+        Advanced compositing in <strong>Nuke</strong> and simulations in <strong>Houdini</strong>. Our{" "}
+        <strong>VFX Degree Courses</strong> are designed for students seeking high-end careers in Film &amp; Media.
       </>
     ),
     icon: Layers3,
   },
   {
-    name: "UI UX",
+    name: "Best UI UX Course in Noida",
     description: (
       <>
-        Logic meets design. Master <strong>Figma</strong>, user psychology, and product prototyping for the Noida
-        tech-agency hub.
+        Logic meets design. Master <strong>Figma</strong>, user psychology, and product prototyping for Noida&apos;s
+        tech-agency hub with professional certification and portfolio reviews.
       </>
     ),
     icon: MonitorSmartphone,
   },
   {
-    name: "Gaming",
+    name: "Best Game Design Course in Delhi NCR",
     description: (
       <>
-        Build AAA titles with <strong>Unreal Engine 5</strong>. Covers game art, environment design, and AR/VR
-        integration.
+        Build AAA-style titles with <strong>Unreal Engine 5</strong>. Covers game art, environment design, AR/VR, and
+        career-ready production workflows for Delhi NCR studios.
       </>
     ),
     icon: Gamepad2,
   },
   {
-    name: "Interior",
+    name: "Best Interior Visualization Course in Noida",
     description: (
       <>
         Photorealistic architectural visualization using <strong>3ds Max</strong> and <strong>V-Ray</strong> for
-        real-time walkthroughs.
+        real-time walkthroughs, professional certification, and creative careers across Noida and Delhi NCR.
       </>
     ),
     icon: PenTool,
@@ -89,7 +90,7 @@ const flagshipTracks = [
   {
     name: "Career X",
     description:
-      "Our 100% Placement Assistance program. Access mock interviews with experts from Noida Film City and build a job-winning Showreel.",
+      "Ranking as the Best Animation Course in Ghaziabad & Noida, our curriculum includes Career X placement support, mock interviews, and a job-winning showreel.",
     icon: BadgeCheck,
   },
 ];
@@ -113,7 +114,7 @@ const advantages = [
 ];
 
 const degreeHighlights = [
-  "Bachelor's degree pathway focused on animation and VFX production skills.",
+  "Bachelor's degree pathway focused on Animation Degree and VFX production skills.",
   "UGC-recognized Scope Global Skills University academic association.",
   "Portfolio-led training for studio, broadcast, gaming, and digital content careers.",
 ];
@@ -122,36 +123,42 @@ const studentWorks = [
   {
     title: "Futuristic UI Concept",
     category: "UI/UX",
+    alt: "Best UI UX Course Noida student work from MAAC Sector 63",
     image:
       "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=640&q=72&fm=webp",
   },
   {
     title: "3D Cafe Environment",
     category: "3D Animation",
+    alt: "MAAC Ghaziabad Animation Labs 3D student environment artwork",
     image:
       "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?auto=format&fit=crop&w=640&q=72&fm=webp",
   },
   {
     title: "Editing Studio Setup",
     category: "VFX",
+    alt: "Best VFX Course Noida student work editing and compositing setup",
     image:
       "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=640&q=72&fm=webp",
   },
   {
     title: "Action Shot Composite",
     category: "VFX",
+    alt: "VFX Degree Noida student work action shot composite",
     image:
       "https://images.unsplash.com/photo-1535016120720-40c646be5580?auto=format&fit=crop&w=640&q=72&fm=webp",
   },
   {
     title: "Game World Design",
     category: "Game Design",
+    alt: "Best Game Design Course Delhi NCR student game world design",
     image:
       "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=640&q=72&fm=webp",
   },
   {
     title: "Character Lighting Study",
     category: "Animation",
+    alt: "Best Animation Course in Ghaziabad and Noida character lighting student work",
     image:
       "https://images.unsplash.com/photo-1626544827763-d516dce335e2?auto=format&fit=crop&w=640&q=72&fm=webp",
   },
@@ -213,7 +220,14 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-studio/90 backdrop-blur-xl">
         <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <a href="#" className="relative h-12 w-32 shrink-0 sm:h-14 sm:w-44" aria-label="MAAC Noida home">
-            <Image src="/maacnoida.png" alt="MAAC Noida" fill priority sizes="(max-width: 640px) 128px, 176px" className="object-contain" />
+            <Image
+              src="/maacnoida.png"
+              alt="MAAC Noida Sector 63 best animation and VFX institute in Delhi NCR"
+              fill
+              priority
+              sizes="(max-width: 640px) 128px, 176px"
+              className="object-contain"
+            />
           </a>
 
           <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1 lg:flex">
@@ -246,7 +260,7 @@ export default function Home() {
       <section className="relative isolate">
         <Image
           src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=75&fm=webp"
-          alt="Dark creative studio with golden lighting"
+          alt="Best VFX Course Noida student work creative studio at MAAC Sector 63"
           fill
           priority
           sizes="100vw"
@@ -258,12 +272,12 @@ export default function Home() {
         <div className="mx-auto grid min-h-[calc(100svh-65px)] w-full max-w-7xl items-center gap-8 px-4 py-8 sm:px-6 md:grid-cols-[1.08fr_0.92fr] md:py-14 lg:px-8">
           <div className="max-w-3xl pt-2">
             <h1 className="text-balance text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-7xl">
-              Master the Art of Visual Storytelling at MAAC{" "}
-              <span className="text-maacGold">Noida Sector 63</span>.
+              The Most Recommended Animation &amp; VFX Degree Courses in Noida and Delhi NCR.
             </h1>
             <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-white/78 sm:text-xl">
-              Join India&apos;s premier institute for 3D Animation, VFX, and Gaming. 2026 Industry-Ready curriculum
-              featuring AI-integrated workflows and <strong>Unreal Engine 5</strong>.
+              Join MAAC <span className="text-maacGold">Noida Sector 63</span> for 2026 industry-ready 3D Animation,
+              <strong> VFX Degree Courses</strong>, Gaming, and UI/UX training featuring AI-integrated workflows and{" "}
+              <strong>Unreal Engine 5</strong>.
             </p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-white/62 sm:text-base">
               Train at MAAC Animation in <span className="font-bold text-maacGold">Noida Sector 63</span>, minutes from
@@ -300,7 +314,7 @@ export default function Home() {
         <div className="max-w-2xl">
           <p className="text-sm font-bold uppercase tracking-[0.22em] text-maacGold">Career Tracks</p>
           <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
-            MAAC Animation, VFX, UI UX, Gaming, and Interior courses.
+            Best animation, VFX degree, UI UX, gaming, and design courses in Noida.
           </h2>
         </div>
 
@@ -315,7 +329,7 @@ export default function Home() {
                 <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-2xl bg-maacGold text-black">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <h3 className="text-xl font-extrabold">{course.name}</h3>
+                <h2 className="text-xl font-extrabold">{course.name}</h2>
                 <p className="mt-3 text-sm leading-6 text-white/64">{course.description}</p>
               </article>
             );
@@ -331,8 +345,8 @@ export default function Home() {
               Creator X and Career X at MAAC <span className="text-maacGold">Noida Sector 63</span>.
             </h2>
             <p className="mt-4 text-base leading-7 text-white/68">
-              Build creator-first skills and a placement-ready portfolio with focused tracks designed for today&apos;s
-              animation, VFX, gaming, and digital content careers.
+              Build creator-first skills and a placement-ready portfolio with focused tracks designed for today&apos;s{" "}
+              <strong>Animation Degree</strong>, VFX, gaming, and digital content careers.
             </p>
           </div>
 
@@ -365,8 +379,8 @@ export default function Home() {
                 B.Voc in Animation &amp; VFX
               </h2>
               <p className="mt-4 text-base leading-7 text-white/68">
-                A bachelor&apos;s degree track for students who want academic recognition along with practical,
-                studio-oriented skills in animation, compositing, visual effects, and digital production.
+                A bachelor&apos;s degree track for students who want degree equivalency, professional certification, and
+                practical studio-oriented skills in animation, compositing, visual effects, and digital production.
               </p>
             </div>
 
@@ -420,7 +434,7 @@ export default function Home() {
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={work.image}
-                    alt={work.title}
+                    alt={work.alt}
                     fill
                     sizes="(max-width: 640px) 240px, 300px"
                     className="object-cover transition duration-300 group-hover:scale-105"
@@ -446,7 +460,8 @@ export default function Home() {
             <p className="mt-4 text-base leading-7 text-white/68">
               We are located at the heart of Noida&apos;s H-Block tech hub, just 5 minutes from the Electronic City Metro
               Station. Our students benefit from direct proximity to 100+ digital agencies and the Sector 16 Film City
-              ecosystem.
+              ecosystem, making MAAC Sector 63 a strong choice for MAAC Noida, MAAC Ghaziabad, and MAAC Delhi NCR
+              course searches.
             </p>
           </div>
 
@@ -626,7 +641,7 @@ function LeadForm({ formData, formStatus, formMessage, setFormData, onSubmit }: 
           Start your MAAC <span className="text-maacGold">Noida Sector 63</span> admission enquiry.
         </h2>
         <p className="mt-2 text-sm leading-6 text-white/60">
-          Share your details to explore 2026 Animation, VFX, Gaming, UI UX, and design course options.
+          Share your details to explore 2026 Animation Degree, VFX Degree Courses, Gaming, UI UX, and design options.
         </p>
       </div>
 
