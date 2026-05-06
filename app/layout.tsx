@@ -9,7 +9,7 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const title = "MAAC Noida Sector 63 | Animation Degree, VFX & UI UX Courses";
+const title = "MAAC Noida Sector 63 | 3D Animation, VFX & Gaming Courses";
 const description =
   "Looking for the best animation courses in Noida or Ghaziabad? MAAC Sector 63 offers industry-leading VFX degree programs, 3D animation, and UI/UX training in Delhi NCR. 100% placement assistance.";
 const keywords = [

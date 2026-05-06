@@ -272,7 +272,8 @@ export default function Home() {
         <div className="mx-auto grid min-h-[calc(100svh-65px)] w-full max-w-7xl items-center gap-8 px-4 py-8 sm:px-6 md:grid-cols-[1.08fr_0.92fr] md:py-14 lg:px-8">
           <div className="max-w-3xl pt-2">
             <h1 className="text-balance text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-7xl">
-              The Most Recommended Animation &amp; VFX Degree Courses in Noida and Delhi NCR.
+              Master the Art of Animation &amp; VFX at MAAC{" "}
+              <span className="text-maacGold">Noida 63</span>.
             </h1>
             <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-white/78 sm:text-xl">
               Join MAAC <span className="text-maacGold">Noida Sector 63</span> for 2026 industry-ready 3D Animation,
@@ -460,8 +461,8 @@ export default function Home() {
             <p className="mt-4 text-base leading-7 text-white/68">
               We are located at the heart of Noida&apos;s H-Block tech hub, just 5 minutes from the Electronic City Metro
               Station. Our students benefit from direct proximity to 100+ digital agencies and the Sector 16 Film City
-              ecosystem, making MAAC Sector 63 a strong choice for MAAC Noida, MAAC Ghaziabad, and MAAC Delhi NCR
-              course searches.
+              ecosystem, making MAAC Sector 63 a strong choice for students serious about animation, VFX, design, and
+              media careers.
             </p>
           </div>
 
