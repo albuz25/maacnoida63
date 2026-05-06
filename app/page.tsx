@@ -20,48 +20,94 @@ import {
 } from "lucide-react";
 import { FormEvent, useState } from "react";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const courses = [
   {
     name: "3D Animation",
-    description: "Character, lighting, texturing, and cinematic storytelling pipelines.",
+    description: (
+      <>
+        Master the full pipeline from <strong>Maya</strong> to <strong>ZBrush</strong>. Learn character sculpting,
+        rigging, and high-end cinematic animation.
+      </>
+    ),
     icon: Palette,
   },
   {
-    name: "VFX",
-    description: "Compositing, rotoscopy, matchmove, and studio-ready visual effects.",
+    name: "VFX & ADVFX",
+    description: (
+      <>
+        Advanced compositing in <strong>Nuke</strong> and dynamic simulations in <strong>Houdini</strong>. The ADVFX
+        Plus program is designed for Hollywood-standard visual effects.
+      </>
+    ),
     icon: Layers3,
   },
   {
-    name: "Game Design",
-    description: "Game art, real-time environments, and interactive asset workflows.",
-    icon: Gamepad2,
-  },
-  {
-    name: "UI/UX",
-    description: "Product design, prototypes, visual systems, and portfolio projects.",
+    name: "UI UX",
+    description: (
+      <>
+        Logic meets design. Master <strong>Figma</strong>, user psychology, and product prototyping for the Noida
+        tech-agency hub.
+      </>
+    ),
     icon: MonitorSmartphone,
   },
   {
-    name: "Graphic Design",
-    description: "Branding, layouts, typography, and campaign-ready visual communication.",
+    name: "Gaming",
+    description: (
+      <>
+        Build AAA titles with <strong>Unreal Engine 5</strong>. Covers game art, environment design, and AR/VR
+        integration.
+      </>
+    ),
+    icon: Gamepad2,
+  },
+  {
+    name: "Interior",
+    description: (
+      <>
+        Photorealistic architectural visualization using <strong>3ds Max</strong> and <strong>V-Ray</strong> for
+        real-time walkthroughs.
+      </>
+    ),
     icon: PenTool,
+  },
+];
+
+const flagshipTracks = [
+  {
+    name: "Creator X",
+    description:
+      "The ultimate track for Content Creators. Master video editing, 2D motion graphics, and AI-assisted storytelling for YouTube & Social Media.",
+    icon: MonitorSmartphone,
+  },
+  {
+    name: "Career X",
+    description:
+      "Our 100% Placement Assistance program. Access mock interviews with experts from Noida Film City and build a job-winning Showreel.",
+    icon: BadgeCheck,
   },
 ];
 
 const advantages = [
   {
-    label: "5 Mins from Metro",
-    detail: "Fast access for students across Noida, Ghaziabad, and East Delhi.",
+    label: "5 Minutes from Electronic City Metro",
+    detail: "Reach the centre quickly from across Noida, Ghaziabad, and East Delhi.",
     icon: Train,
   },
   {
-    label: "Surrounded by 100+ Digital Agencies",
-    detail: "Learn close to Sector 63's H-Block tech hub and NCR production teams.",
+    label: "100+ Digital Agencies Nearby",
+    detail: "Study in H-Block with direct proximity to Noida's active tech-agency hub.",
     icon: Building2,
   },
   {
-    label: "State-of-the-Art Render Farm",
-    detail: "Practice on a production-minded setup built for heavy creative projects.",
+    label: "Close to Sector 16 Film City",
+    detail: "Stay connected to the production ecosystem where portfolios become opportunities.",
     icon: Zap,
   },
 ];
@@ -116,6 +162,14 @@ const mapUrl =
 const mapLink =
   "https://www.google.com/maps/search/?api=1&query=MAAC%20Noida-63%20H-58%20H%20Block%20Lower%20Ground%20Floor%20Sector%2063%20Noida%20Uttar%20Pradesh%20201309";
 
+function trackLeadFormConversion() {
+  window.gtag?.("event", "conversion", {
+    send_to: "AW-18141074024/5TRhCLfWt6gcEOikq8pD",
+    value: 1.0,
+    currency: "INR",
+  });
+}
+
 export default function Home() {
   const [formData, setFormData] = useState({
     name: "",
@@ -144,6 +198,7 @@ export default function Home() {
         throw new Error(result.message || "Could not submit your request.");
       }
 
+      trackLeadFormConversion();
       setFormStatus("success");
       setFormMessage(result.message || "Thanks. Our admissions team will call you shortly.");
       setFormData({ name: "", mobile: "", course: "" });
@@ -203,14 +258,16 @@ export default function Home() {
         <div className="mx-auto grid min-h-[calc(100svh-65px)] w-full max-w-7xl items-center gap-8 px-4 py-8 sm:px-6 md:grid-cols-[1.08fr_0.92fr] md:py-14 lg:px-8">
           <div className="max-w-3xl pt-2">
             <h1 className="text-balance text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-7xl">
-              Master VFX, Animation &amp; Creative Design Skills.
+              Master the Art of Visual Storytelling at MAAC{" "}
+              <span className="text-maacGold">Noida Sector 63</span>.
             </h1>
             <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-white/78 sm:text-xl">
-              Industry-leading courses designed for the studios next door.
+              Join India&apos;s premier institute for 3D Animation, VFX, and Gaming. 2026 Industry-Ready curriculum
+              featuring AI-integrated workflows and <strong>Unreal Engine 5</strong>.
             </p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-white/62 sm:text-base">
-              Train near H-Block, Sector 63, with quick access to Film City, agency offices, and NCR&apos;s growing
-              creative production corridor.
+              Train at MAAC Animation in <span className="font-bold text-maacGold">Noida Sector 63</span>, minutes from
+              H-Block studios, Film City networks, and NCR&apos;s growing creative production corridor.
             </p>
             <div className="mt-7 flex flex-col gap-3 min-[390px]:flex-row">
               <a
@@ -242,7 +299,9 @@ export default function Home() {
       <section id="courses" className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="text-sm font-bold uppercase tracking-[0.22em] text-maacGold">Career Tracks</p>
-          <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Bento-box course grid built for creators.</h2>
+          <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+            MAAC Animation, VFX, UI UX, Gaming, and Interior courses.
+          </h2>
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -261,6 +320,36 @@ export default function Home() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section id="x-factors" className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
+        <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.04] p-5 sm:p-8 lg:p-10">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.22em] text-maacGold">Flagship X Factors</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+              Creator X and Career X at MAAC <span className="text-maacGold">Noida Sector 63</span>.
+            </h2>
+            <p className="mt-4 text-base leading-7 text-white/68">
+              Build creator-first skills and a placement-ready portfolio with focused tracks designed for today&apos;s
+              animation, VFX, gaming, and digital content careers.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {flagshipTracks.map((track) => {
+              const Icon = track.icon;
+              return (
+                <article key={track.name} className="rounded-[2rem] border border-maacGold/20 bg-black/35 p-5 sm:p-6">
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-maacGold text-black">
+                    <Icon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <h3 className="text-2xl font-black">{track.name}</h3>
+                  <p className="mt-3 text-sm leading-6 text-white/68 sm:text-base">{track.description}</p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -352,11 +441,12 @@ export default function Home() {
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.22em] text-maacGold">Sector 63 Advantage</p>
             <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
-              Learn where Noida&apos;s tech and studio energy meets.
+              Why choose MAAC <span className="text-maacGold">Noida Sector 63</span>?
             </h2>
             <p className="mt-4 text-base leading-7 text-white/68">
-              MAAC Sector 63 keeps students close to H-Block offices, Film City networks, and the agencies where
-              portfolios turn into interviews.
+              We are located at the heart of Noida&apos;s H-Block tech hub, just 5 minutes from the Electronic City Metro
+              Station. Our students benefit from direct proximity to 100+ digital agencies and the Sector 16 Film City
+              ecosystem.
             </p>
           </div>
 
@@ -532,8 +622,12 @@ function LeadForm({ formData, formStatus, formMessage, setFormData, onSubmit }: 
     >
       <div className="mb-5">
         <p className="text-sm font-bold uppercase tracking-[0.22em] text-maacGold">Request a Callback</p>
-        <h2 className="mt-2 text-2xl font-black tracking-tight">Get a quick call from our admissions team.</h2>
-        <p className="mt-2 text-sm leading-6 text-white/60">No long forms. Just the essentials for a quick callback.</p>
+        <h2 className="mt-2 text-2xl font-black tracking-tight">
+          Start your MAAC <span className="text-maacGold">Noida Sector 63</span> admission enquiry.
+        </h2>
+        <p className="mt-2 text-sm leading-6 text-white/60">
+          Share your details to explore 2026 Animation, VFX, Gaming, UI UX, and design course options.
+        </p>
       </div>
 
       <div className="grid gap-4">
@@ -584,11 +678,13 @@ function LeadForm({ formData, formStatus, formMessage, setFormData, onSubmit }: 
               Select a course
             </option>
             <option className="bg-studio">3D Animation</option>
-            <option className="bg-studio">VFX</option>
-            <option className="bg-studio">Game Design</option>
-            <option className="bg-studio">UI/UX</option>
-            <option className="bg-studio">Graphic Design</option>
-            <option className="bg-studio">B.Voc in Animation & VFX</option>
+            <option className="bg-studio">VFX &amp; ADVFX</option>
+            <option className="bg-studio">UI UX</option>
+            <option className="bg-studio">Gaming</option>
+            <option className="bg-studio">Interior</option>
+            <option className="bg-studio">Creator X</option>
+            <option className="bg-studio">Career X</option>
+            <option className="bg-studio">B.Voc in Animation &amp; VFX</option>
           </select>
         </label>
 

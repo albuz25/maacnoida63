@@ -9,9 +9,9 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const title = "MAAC NCR | Animation, VFX, Design & Degree Courses";
+const title = "MAAC Noida Sector 63 | 3D Animation, VFX & Gaming Courses";
 const description =
-  "Explore career-focused animation, VFX, graphic design, game design, UI/UX, and B.Voc Animation & VFX programs at MAAC NCR.";
+  "Join MAAC Noida Sector 63 for 2026 industry-ready 3D Animation, VFX, Gaming, UI UX, and design courses with AI-integrated workflows.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.maacncr.com"),
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "MAAC NCR creative courses preview",
+        alt: "MAAC Noida Sector 63 animation and VFX courses preview",
       },
     ],
   },

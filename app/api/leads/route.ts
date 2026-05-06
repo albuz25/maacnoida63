@@ -9,10 +9,12 @@ type LeadPayload = {
 
 const validCourses = new Set([
   "3D Animation",
-  "VFX",
-  "Game Design",
-  "UI/UX",
-  "Graphic Design",
+  "VFX & ADVFX",
+  "UI UX",
+  "Gaming",
+  "Interior",
+  "Creator X",
+  "Career X",
   "B.Voc in Animation & VFX",
 ]);
 
