@@ -180,6 +180,7 @@ function trackLeadFormConversion() {
 export default function Home() {
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     mobile: "",
     course: "",
   });
@@ -197,7 +198,10 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          pageUrl: window.location.href,
+        }),
       });
       const result = (await response.json()) as { message?: string };
 
@@ -208,7 +212,7 @@ export default function Home() {
       trackLeadFormConversion();
       setFormStatus("success");
       setFormMessage(result.message || "Thanks. Our admissions team will call you shortly.");
-      setFormData({ name: "", mobile: "", course: "" });
+      setFormData({ name: "", email: "", mobile: "", course: "" });
     } catch (error) {
       setFormStatus("error");
       setFormMessage(error instanceof Error ? error.message : "Could not submit your request.");
@@ -606,7 +610,7 @@ export default function Home() {
         target="_blank"
         rel="noreferrer"
         aria-label="Chat on WhatsApp"
-        className="fixed bottom-4 right-4 z-[60] inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-black text-black shadow-2xl shadow-black/35 transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-studio sm:bottom-6 sm:right-6 sm:px-5"
+        className="fixed bottom-4 left-4 z-[60] inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-black text-black shadow-2xl shadow-black/35 transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-studio sm:bottom-6 sm:left-6 sm:px-5"
       >
         <MessageCircle className="h-5 w-5" aria-hidden="true" />
         <span className="hidden sm:inline">WhatsApp</span>
@@ -618,12 +622,13 @@ export default function Home() {
 type LeadFormProps = {
   formData: {
     name: string;
+    email: string;
     mobile: string;
     course: string;
   };
   formStatus: "idle" | "submitting" | "success" | "error";
   formMessage: string;
-  setFormData: (value: { name: string; mobile: string; course: string }) => void;
+  setFormData: (value: { name: string; email: string; mobile: string; course: string }) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
@@ -658,6 +663,21 @@ function LeadForm({ formData, formStatus, formMessage, setFormData, onSubmit }: 
             value={formData.name}
             onChange={(event) => setFormData({ ...formData, name: event.target.value })}
             placeholder="Your full name"
+            className="min-h-12 rounded-2xl border border-white/10 bg-white/[0.07] px-4 text-base text-white outline-none transition placeholder:text-white/35 focus:border-maacGold focus:ring-2 focus:ring-maacGold/25"
+          />
+        </label>
+
+        <label className="grid gap-2 text-sm font-bold text-white/82">
+          Email
+          <input
+            required
+            type="email"
+            name="email"
+            autoComplete="email"
+            disabled={isSubmitting}
+            value={formData.email}
+            onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+            placeholder="you@example.com"
             className="min-h-12 rounded-2xl border border-white/10 bg-white/[0.07] px-4 text-base text-white outline-none transition placeholder:text-white/35 focus:border-maacGold focus:ring-2 focus:ring-maacGold/25"
           />
         </label>

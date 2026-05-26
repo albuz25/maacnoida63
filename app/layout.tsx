@@ -75,6 +75,12 @@ const courseSchema = {
   })),
 };
 
+const rootleSapCodes = (process.env.ROOTLE_SAP_CODES || process.env.APTRACK_CENTRE_SAP_CODE || "")
+  .split(",")
+  .map((code) => code.trim())
+  .filter(Boolean);
+const rootleSecondarySource = rootleSapCodes[0] ? `CL-${rootleSapCodes[0]}` : "CL";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.maacncr.com"),
   title,
@@ -132,6 +138,27 @@ export default function RootLayout({
             gtag('config', 'AW-18141074024');
           `}
         </Script>
+        {rootleSapCodes.length ? (
+          <>
+            <Script src="/chatbot-js-based/chat-widget.v.1.0.js" strategy="afterInteractive" />
+            <Script id="rootle-chat-widget-init" strategy="afterInteractive">
+              {`
+                (function initRootleChatWidget() {
+                  if (!window.MAACChatWidget) {
+                    window.setTimeout(initRootleChatWidget, 100);
+                    return;
+                  }
+
+                  window.MAACChatWidget.init({
+                    sap_codes: ${JSON.stringify(rootleSapCodes.map((code) => Number(code) || code))},
+                    p_source: "Center",
+                    s_source: ${JSON.stringify(rootleSecondarySource)}
+                  });
+                })();
+              `}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );
