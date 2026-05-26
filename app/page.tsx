@@ -280,9 +280,8 @@ export default function Home() {
               <span className="text-maacGold">Noida 63</span>.
             </h1>
             <p className="mt-5 max-w-2xl text-pretty text-lg leading-8 text-white/78 sm:text-xl">
-              Join MAAC <span className="text-maacGold">Noida Sector 63</span> for 2026 industry-ready 3D Animation,
-              <strong> VFX Degree Courses</strong>, Gaming, and UI/UX training featuring AI-integrated workflows and{" "}
-              <strong>Unreal Engine 5</strong>.
+              Join MAAC <span className="text-maacGold">Noida Sector 63</span> for creative, career-focused courses in
+              animation, <strong>VFX</strong>, UI/UX, gaming, and AI-powered digital media workflows.
             </p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-white/62 sm:text-base">
               Train at MAAC Animation in <span className="font-bold text-maacGold">Noida Sector 63</span>, minutes from
@@ -717,10 +716,8 @@ function LeadForm({ formData, formStatus, formMessage, setFormData, onSubmit }: 
             <option className="bg-studio">VFX &amp; ADVFX</option>
             <option className="bg-studio">UI UX</option>
             <option className="bg-studio">Gaming</option>
-            <option className="bg-studio">Interior</option>
-            <option className="bg-studio">Creator X</option>
-            <option className="bg-studio">Career X</option>
             <option className="bg-studio">B.Voc in Animation &amp; VFX</option>
+            <option className="bg-studio">Other Short Term Courses</option>
           </select>
         </label>
 

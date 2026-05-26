@@ -8,17 +8,12 @@ create table if not exists public.leads (
   course_interest text not null check (
     course_interest in (
       '3D Animation',
-      'VFX & ADVFX',
-      'UI UX',
-      'Gaming',
-      'Interior',
-      'Creator X',
-      'Career X',
       'VFX',
       'Game Design',
       'UI/UX',
       'Graphic Design',
-      'B.Voc in Animation & VFX'
+      'B.Voc in Animation & VFX',
+      'Other Short Term Courses'
     )
   ),
   source text not null default 'maac-sector-63-landing',
@@ -38,14 +33,8 @@ alter table public.leads add constraint leads_course_interest_check check (
     'VFX & ADVFX',
     'UI UX',
     'Gaming',
-    'Interior',
-    'Creator X',
-    'Career X',
-    'VFX',
-    'Game Design',
-    'UI/UX',
-    'Graphic Design',
-    'B.Voc in Animation & VFX'
+    'B.Voc in Animation & VFX',
+    'Other Short Term Courses'
   )
 );
 
@@ -65,10 +54,8 @@ with check (
     'VFX & ADVFX',
     'UI UX',
     'Gaming',
-    'Interior',
-    'Creator X',
-    'Career X',
-    'B.Voc in Animation & VFX'
+    'B.Voc in Animation & VFX',
+    'Other Short Term Courses'
   )
   and source = 'maac-sector-63-landing'
   and status = 'new'

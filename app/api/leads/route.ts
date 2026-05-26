@@ -41,18 +41,16 @@ const validCourses = new Set([
   "VFX & ADVFX",
   "UI UX",
   "Gaming",
-  "Interior",
-  "Creator X",
-  "Career X",
   "B.Voc in Animation & VFX",
+  "Other Short Term Courses",
 ]);
 
 const courseAliases: Record<string, string[]> = {
   "VFX & ADVFX": ["vfx", "advfx", "advanced visual effects"],
   "UI UX": ["ui ux", "ui/ux", "user interface", "user experience"],
   Gaming: ["gaming", "game design", "gaming and id"],
-  Interior: ["interior", "architectural", "real estate"],
   "B.Voc in Animation & VFX": ["b voc", "bvoc", "animation vfx"],
+  "Other Short Term Courses": ["short term", "short-term", "other"],
 };
 
 function getAptrackUrls() {
