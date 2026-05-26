@@ -47,10 +47,19 @@ const validCourses = new Set([
 
 const courseAliases: Record<string, string[]> = {
   "VFX & ADVFX": ["vfx", "advfx", "advanced visual effects"],
-  "UI UX": ["ui ux", "ui/ux", "user interface", "user experience"],
+  "UI UX": ["ui ux", "ui/ux", "user interface", "user experience", "digital content creation"],
   Gaming: ["gaming", "game design", "gaming and id"],
-  "B.Voc in Animation & VFX": ["b voc", "bvoc", "animation vfx"],
+  "B.Voc in Animation & VFX": ["b voc", "bvoc", "bachelor of vocation"],
   "Other Short Term Courses": ["short term", "short-term", "other"],
+};
+
+const defaultCourseIds: Record<string, number> = {
+  "3D Animation": 445,
+  "VFX & ADVFX": 324,
+  "UI UX": 740,
+  Gaming: 741,
+  "B.Voc in Animation & VFX": 567,
+  "Other Short Term Courses": 734,
 };
 
 function getAptrackUrls() {
@@ -93,14 +102,17 @@ function getCourseMap() {
   const rawMap = process.env.APTRACK_COURSE_MAP_JSON;
 
   if (!rawMap) {
-    return {};
+    return defaultCourseIds;
   }
 
   try {
-    return JSON.parse(rawMap) as Record<string, number>;
+    return {
+      ...defaultCourseIds,
+      ...(JSON.parse(rawMap) as Record<string, number>),
+    };
   } catch {
     console.error("Invalid APTRACK_COURSE_MAP_JSON.");
-    return {};
+    return defaultCourseIds;
   }
 }
 
@@ -134,7 +146,14 @@ async function postJson<T>(url: string, headers: HeadersInit, body: unknown) {
     cache: "no-store",
   });
 
-  const data = (await response.json().catch(() => null)) as T | null;
+  const responseText = await response.text();
+  let data: T | null = null;
+
+  try {
+    data = responseText ? (JSON.parse(responseText) as T) : null;
+  } catch {
+    data = null;
+  }
 
   if (!response.ok) {
     const message =
@@ -143,9 +162,9 @@ async function postJson<T>(url: string, headers: HeadersInit, body: unknown) {
       "Message" in data &&
       typeof (data as { Message?: unknown }).Message === "string"
         ? (data as { Message: string }).Message
-        : "Aptrack request failed.";
+        : responseText.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() || "Aptrack request failed.";
 
-    throw new Error(message);
+    throw new Error(`Aptrack request failed (${response.status}): ${message}`);
   }
 
   return data;
@@ -182,134 +201,162 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Please select a valid course." }, { status: 400 });
   }
 
+  let supabaseSaved = false;
+  let supabaseError: string | null = null;
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const publishableKey = process.env.SUPABASE_PUBLISHABLE_KEY;
+
+  if (supabaseUrl && publishableKey) {
+    const supabase = createClient(supabaseUrl, publishableKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
+
+    const { error } = await supabase.from("leads").insert({
+      name,
+      mobile,
+      course_interest: course,
+      source: "maac-sector-63-landing",
+      status: "new",
+      notes: null,
+    });
+
+    if (error) {
+      supabaseError = error.message;
+      console.error("Supabase lead insert failed:", error.message);
+    } else {
+      supabaseSaved = true;
+    }
+  } else {
+    supabaseError = "Supabase lead capture is not configured.";
+  }
+
   const authKey = process.env.APTRACK_AUTH_KEY;
   const sapCode = process.env.APTRACK_CENTRE_SAP_CODE || process.env.ROOTLE_SAP_CODES?.split(",")[0]?.trim();
   const brandId = Number(process.env.APTRACK_BRAND_ID || 104);
   const countryId = Number(process.env.APTRACK_COUNTRY_ID || 1);
+  let aptrackSaved = false;
+  let aptrackError: string | null = null;
 
   if (!authKey || !sapCode) {
-    return NextResponse.json({ message: "Aptrack lead capture is not configured yet." }, { status: 500 });
-  }
+    aptrackError = "Aptrack lead capture is not configured.";
+  } else {
+    const urls = getAptrackUrls();
+    const sharedHeaders = {
+      "X-Auth-Key": authKey,
+      "Content-Type": "application/json",
+    };
 
-  const urls = getAptrackUrls();
-  const sharedHeaders = {
-    "X-Auth-Key": authKey,
-    "Content-Type": "application/json",
-  };
-
-  try {
-    const centreData = await postJson<CentreDetailsResponse>(urls.centreDetails, sharedHeaders, {
-      brand_id: brandId,
-      country_id: countryId,
-      sap_code: sapCode,
-    });
-    const centreDetails = centreData?.centre_details;
-
-    if (!centreDetails?.centre_id || !centreDetails.state_id || !centreDetails.city_id) {
-      throw new Error("Could not fetch valid centre details from Aptrack.");
-    }
-
-    const courseMap = getCourseMap();
-    let courseId: number | undefined = courseMap[course];
-
-    if (!courseId) {
-      courseId = findCourseId(course, centreDetails.courses || []);
-    }
-
-    if (!courseId) {
-      const courseData = await postJson<CourseListResponse>(urls.courseList, sharedHeaders, {
+    try {
+      const centreData = await postJson<CentreDetailsResponse>(urls.centreDetails, sharedHeaders, {
         brand_id: brandId,
         country_id: countryId,
+        sap_code: sapCode,
       });
-      courseId = findCourseId(course, courseData?.all_courses || []);
-    }
+      const centreDetails = centreData?.centre_details;
 
-    if (!courseId) {
-      throw new Error("Could not map the selected course to an Aptrack course ID.");
-    }
-
-    const { firstName, lastName } = splitName(name);
-    const saveResult = await postJson<AptrackSaveResponse>(
-      urls.save,
-      {
-        ...sharedHeaders,
-        "X-Username": process.env.APTRACK_USERNAME || "SUPER_LEAP",
-      },
-      {
-        I_Brand_ID: brandId,
-        S_First_Name: firstName,
-        S_Last_Name: lastName,
-        S_Email_ID: email,
-        S_Mobile_No: mobile,
-        S_Phone_No: "",
-        I_CourseEnquiryMaster_ID: courseId,
-        I_Pref_State_ID: centreDetails.state_id,
-        I_City_ID: centreDetails.city_id,
-        I_Pref_Center_ID: centreDetails.centre_id,
-        S_P_Source: "Center",
-        S_S_Source: `CL-${sapCode}`,
-        S_Comments: `Course interest: ${course}`,
-        S_CurrentlyDoing: "",
-        S_Brand_Code: "MAAC",
-        S_Ip_Address_Location: "",
-        S_Form_Name: "MAAC Sector 63 Landing Page",
-        S_Network: "",
-        S_Creative: "",
-        S_Keyword: "",
-        S_Placement: "",
-        S_Adposition: "",
-        S_MatchType: "",
-        S_accid: "",
-        S_Page_URL: pageUrl,
-        S_Pages_Visited: pageUrl,
-        S_LeadProfile: "",
-        S_LeadProfileAttributes: "",
-        S_LeadScore: null,
-        CRMEnquiryId: "",
-        EnquiryCategoryId: 0,
-        StatusId: 0,
-        EnquiryStatusId: 0,
-        EnquirySubStatusId: 0,
-        S_Meeting_Comments: "",
-        S_Meeting_ScheduleAt: null,
-        S_Pushed_To_AptrackAt: null,
+      if (!centreDetails?.centre_id || !centreDetails.state_id || !centreDetails.city_id) {
+        throw new Error("Could not fetch valid centre details from Aptrack.");
       }
-    );
 
-    if (!saveResult?.IsSuccess) {
-      throw new Error(saveResult?.Message || "Aptrack could not save the enquiry.");
+      const courseMap = getCourseMap();
+      let courseId: number | undefined = courseMap[course];
+
+      if (!courseId) {
+        courseId = findCourseId(course, centreDetails.courses || []);
+      }
+
+      if (!courseId) {
+        const courseData = await postJson<CourseListResponse>(urls.courseList, sharedHeaders, {
+          brand_id: brandId,
+          country_id: countryId,
+        });
+        courseId = findCourseId(course, courseData?.all_courses || []);
+      }
+
+      if (!courseId) {
+        throw new Error("Could not map the selected course to an Aptrack course ID.");
+      }
+
+      const { firstName, lastName } = splitName(name);
+      const saveResult = await postJson<AptrackSaveResponse>(
+        urls.save,
+        {
+          ...sharedHeaders,
+          "X-Username": process.env.APTRACK_USERNAME || "SUPER_LEAP",
+        },
+        {
+          I_Brand_ID: brandId,
+          S_First_Name: firstName,
+          S_Last_Name: lastName,
+          S_Email_ID: email,
+          S_Mobile_No: mobile,
+          S_Phone_No: "",
+          I_CourseEnquiryMaster_ID: courseId,
+          I_Pref_State_ID: centreDetails.state_id,
+          I_City_ID: centreDetails.city_id,
+          I_Pref_Center_ID: centreDetails.centre_id,
+          S_P_Source: "Center",
+          S_S_Source: `CL-${sapCode}`,
+          S_Comments: `Course interest: ${course}`,
+          S_CurrentlyDoing: "",
+          S_Brand_Code: "MAAC",
+          S_Ip_Address_Location: "",
+          S_Form_Name: "MAAC Sector 63 Landing Page",
+          S_Network: "",
+          S_Creative: "",
+          S_Keyword: "",
+          S_Placement: "",
+          S_Adposition: "",
+          S_MatchType: "",
+          S_accid: "",
+          S_Page_URL: pageUrl,
+          S_Pages_Visited: pageUrl,
+          S_LeadProfile: "",
+          S_LeadProfileAttributes: "",
+          S_LeadScore: null,
+          CRMEnquiryId: "",
+          EnquiryCategoryId: 0,
+          StatusId: 0,
+          EnquiryStatusId: 0,
+          EnquirySubStatusId: 0,
+          S_Meeting_Comments: "",
+          S_Meeting_ScheduleAt: null,
+          S_Pushed_To_AptrackAt: null,
+        }
+      );
+
+      if (!saveResult?.IsSuccess) {
+        throw new Error(saveResult?.Message || "Aptrack could not save the enquiry.");
+      }
+
+      aptrackSaved = true;
+    } catch (error) {
+      aptrackError = error instanceof Error ? error.message : "Aptrack request failed.";
+      console.error("Aptrack lead submission failed:", aptrackError);
     }
-  } catch (error) {
-    console.error("Aptrack lead submission failed:", error instanceof Error ? error.message : error);
-    return NextResponse.json({ message: "Could not save your request. Please call us directly." }, { status: 500 });
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const publishableKey = process.env.SUPABASE_PUBLISHABLE_KEY;
-
-  if (!supabaseUrl || !publishableKey) {
-    return NextResponse.json({ message: "Thanks. Our admissions team will call you shortly." });
+  if (!supabaseSaved && !aptrackSaved) {
+    return NextResponse.json(
+      {
+        message: "Could not save your request. Please call us directly.",
+        details: {
+          supabase: supabaseError,
+          aptrack: aptrackError,
+        },
+      },
+      { status: 500 }
+    );
   }
 
-  const supabase = createClient(supabaseUrl, publishableKey, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
+  return NextResponse.json({
+    message: "Thanks. Our admissions team will call you shortly.",
+    savedTo: {
+      supabase: supabaseSaved,
+      aptrack: aptrackSaved,
     },
   });
-
-  const { error } = await supabase.from("leads").insert({
-    name,
-    mobile,
-    course_interest: course,
-    source: "maac-sector-63-landing",
-    status: "new",
-    notes: null,
-  });
-
-  if (error) {
-    console.error("Supabase lead insert failed:", error.message);
-  }
-
-  return NextResponse.json({ message: "Thanks. Our admissions team will call you shortly." });
 }
