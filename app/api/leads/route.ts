@@ -63,7 +63,7 @@ const defaultCourseIds: Record<string, number> = {
 };
 
 function getAptrackUrls() {
-  const environment = process.env.APTRACK_ENV || "uat";
+  const environment = process.env.APTRACK_ENV || "production";
 
   if (environment === "production") {
     return {
@@ -312,8 +312,8 @@ export async function POST(request: Request) {
           S_Adposition: "",
           S_MatchType: "",
           S_accid: "",
-          S_Page_URL: pageUrl,
-          S_Pages_Visited: pageUrl,
+          S_Page_URL: "",
+          S_Pages_Visited: "",
           S_LeadProfile: "",
           S_LeadProfileAttributes: "",
           S_LeadScore: null,

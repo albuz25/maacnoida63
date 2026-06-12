@@ -21,7 +21,7 @@
   // ========================================
 
   const WS_URL =
-    "wss://hqy0sts5m6.execute-api.ap-south-1.amazonaws.com/stg/";
+    "wss://6v265hlzxc.execute-api.ap-south-1.amazonaws.com/prod/";
 
   let widgetConfig = {
     sap_codes: [],
