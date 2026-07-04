@@ -119,6 +119,54 @@ const degreeHighlights = [
   "Portfolio-led training for studio, broadcast, gaming, and digital content careers.",
 ];
 
+const industryTrends = [
+  {
+    label: "AI-Assisted Creation",
+    title: "Artists who can direct AI tools are moving faster.",
+    detail:
+      "Studios now expect creators to understand prompts, references, cleanup, and production-ready outputs instead of using AI as a shortcut.",
+    metric: "2x",
+    metricLabel: "faster ideation",
+    icon: Zap,
+  },
+  {
+    label: "Realtime 3D",
+    title: "Game engines are powering films, ads, events, and AR.",
+    detail:
+      "Unreal-style realtime pipelines are reshaping environment art, previz, product visualization, and immersive brand experiences.",
+    metric: "24/7",
+    metricLabel: "interactive worlds",
+    icon: Gamepad2,
+  },
+  {
+    label: "Experience Design",
+    title: "UI/UX is blending with motion, 3D, and storytelling.",
+    detail:
+      "Modern product teams need designers who can think in flows, prototypes, micro-interactions, and brand-led digital journeys.",
+    metric: "360",
+    metricLabel: "digital touchpoints",
+    icon: MonitorSmartphone,
+  },
+  {
+    label: "Virtual Production",
+    title: "VFX skills are expanding beyond post-production.",
+    detail:
+      "Compositing, lighting, camera language, and asset pipelines are now useful across OTT, advertising, gaming, and creator content.",
+    metric: "4K",
+    metricLabel: "screen-first output",
+    icon: Layers3,
+  },
+];
+
+const trendSignals = [
+  "AI-enhanced storyboarding",
+  "Realtime 3D environments",
+  "Short-form content studios",
+  "Motion-led UI systems",
+  "Virtual production pipelines",
+  "Game-ready asset creation",
+];
+
 const studentWorks = [
   {
     title: "Futuristic UI Concept",
@@ -338,6 +386,85 @@ export default function Home() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[2.75rem] border border-white/10 bg-[radial-gradient(circle_at_18%_18%,rgba(255,215,0,0.2),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.025))] p-5 shadow-2xl shadow-black/40 sm:p-8 lg:p-10">
+          <div className="absolute right-[-120px] top-[-140px] h-80 w-80 rounded-full bg-maacGold/20 blur-3xl" />
+          <div className="absolute bottom-[-160px] left-1/2 h-72 w-72 rounded-full bg-red-600/20 blur-3xl" />
+
+          <div className="relative grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <div>
+              <p className="inline-flex rounded-full border border-maacGold/30 bg-black/35 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-maacGold">
+                Industry Trends 2026
+              </p>
+              <h2 className="mt-5 max-w-3xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+                The creative industry is changing fast. Train for what studios need next.
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-white/68 sm:text-lg">
+                Animation, VFX, gaming, UI/UX, and AI-powered media are no longer separate lanes. The strongest
+                portfolios now show hybrid skills, fast iteration, and production thinking.
+              </p>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-black/45 p-4 backdrop-blur sm:p-5">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/45">Signals students should watch</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {trendSignals.map((signal) => (
+                  <span
+                    key={signal}
+                    className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-2 text-xs font-bold text-white/74"
+                  >
+                    {signal}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="relative mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {industryTrends.map((trend) => {
+              const Icon = trend.icon;
+
+              return (
+                <article
+                  key={trend.label}
+                  className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 p-5 transition duration-300 hover:-translate-y-1 hover:border-maacGold/50 hover:bg-black/60 hover:shadow-gold"
+                >
+                  <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-maacGold via-white/50 to-transparent opacity-60" />
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-maacGold text-black shadow-gold transition group-hover:scale-110">
+                      <Icon className="h-6 w-6" aria-hidden="true" />
+                    </div>
+                    <div className="rounded-2xl border border-maacGold/20 bg-maacGold/10 px-3 py-2 text-right">
+                      <p className="text-2xl font-black text-maacGold">{trend.metric}</p>
+                      <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/48">{trend.metricLabel}</p>
+                    </div>
+                  </div>
+
+                  <p className="mt-6 text-xs font-black uppercase tracking-[0.2em] text-maacGold">{trend.label}</p>
+                  <h3 className="mt-3 text-xl font-black leading-tight">{trend.title}</h3>
+                  <p className="mt-4 text-sm leading-6 text-white/62">{trend.detail}</p>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="relative mt-6 grid gap-4 rounded-[2rem] border border-white/10 bg-white/[0.045] p-4 sm:grid-cols-3 sm:p-5">
+            <div>
+              <p className="text-3xl font-black text-maacGold">AI + Art</p>
+              <p className="mt-2 text-sm leading-6 text-white/58">Use AI as a production assistant, not a replacement for taste.</p>
+            </div>
+            <div>
+              <p className="text-3xl font-black text-maacGold">Realtime</p>
+              <p className="mt-2 text-sm leading-6 text-white/58">Build scenes and interactive assets that can move across screens.</p>
+            </div>
+            <div>
+              <p className="text-3xl font-black text-maacGold">Portfolio</p>
+              <p className="mt-2 text-sm leading-6 text-white/58">Show finished work, process breakdowns, and role-specific skills.</p>
+            </div>
+          </div>
         </div>
       </section>
 
